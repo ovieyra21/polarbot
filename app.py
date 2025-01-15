@@ -107,11 +107,8 @@ def send_message(recipient_id, message_text):
         logger.error(f"Error al enviar mensaje a {recipient_id}: {e}")
 
 # Punto de entrada para Vercel
-def vercel_handler(request):
-    from flask import Response
-    with app.app_context():
-        response = app.full_dispatch_request()
-        return Response(response=response.get_data(), status=response.status_code, headers=dict(response.headers))
-
 if __name__ == '__main__':
     app.run(debug=os.environ.get('DEBUG', 'False').lower() == 'true')
+else:
+    # Esto es necesario para que Vercel pueda ejecutar la aplicación
+    vercel_handler = app
